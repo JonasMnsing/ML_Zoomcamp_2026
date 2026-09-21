@@ -93,3 +93,45 @@ Where $X^TX$ is the Gram Matrix
 
 ### 2.8 Baseline model for car price prediction project
 
+- In this lesson we build a baseline model and apply the df_train dataset to derive weights for the bias (w0) and the features (w). For this, we use the train_linear_regression(X, y) function from the previous lesson.
+- Linear regression only applies to numerical features. Therefore, only the numerical features from df_train are used for the feature matrix.
+- We notice some of the features in df_train are nan. We set them to 0 for the sake of simplicity, so the model is solvable, but it will be appropriate if a non-zeo value is used as the filler (e.g. mean value of the feature).
+- Once the weights are calculated, then we apply them on $g(X) = w_0 + X\cdot w$ to derive the predicted $y$ vector.
+- Then we plot both predicted $y$ and the actual $y$ on the same histogram for a visual comparison.
+
+### 2.9 Root Mean Squared Error (RMSE)
+
+- In the previous lesson we found out our predictions were a bit off from the actual target values in the training dataset. We need a way to quantify how good or bad the model is. This is where RMSE can be of help.
+- Root Mean Squared Error (RMSE) is a way to evaluate regression models. It measures the error associated with the model being evaluated. This numerical figure can then be used to compare models, enabling us to choose the one that gives the best predictions.
+$$RMSE = \sqrt{\frac{1}{m}\sum_{i=1}^m(g(x_i)-y_i)^2}$$
+
+### 3.10 Computing RMSE on validation data
+
+- Calculation of the RMSE on validation partition of the dataset of car price prediction. In this way, we have a metric to evaluate the model's performance.
+
+### 3.11 Feature engineering
+
+The feature age of the car was included in the dataset, obtained with the subtraction of the maximum year of cars and each of the years of cars. This new feature improved the model performance, measured with the RMSE and comparing the distributions of y target variable and predictions.
+
+### 3.12 Categorical variables
+
+Categorical variables are typically represented as strings, and pandas identifies them as object types. However, some variables that appear to be numerical may actually be categorical (e.g., the number of doors a car has). All these categorical variables need to be converted to a numerical form because ML models can interpret only numerical features. It is possible to incorporate certain categories from a feature, not necessarily all of them. This transformation from categorical to numerical variables is known as One-Hot encoding.
+
+### 3.13 Regularization
+
+If the feature matrix has duplicate columns (or columns that can be expressed as a linear combination of other columns), it will not have an inverse matrix. But, sometimes this error could be passed if certain values are slightly different between duplicated columns.
+
+So, if we apply the normal equation with this feature matrix, the values associated with duplicated columns are very large, which decreases the model performance. To solve this issue, one alternative is adding a small number to the diagonal of the feature matrix, which corresponds to regularization.
+
+This technique works because the addition of small values to the diagonal makes it less likely to have duplicated columns. The regularization value is a hyperparameter of the model. After applying regularization the model performance improved.
+
+### 3.14 Tuning the model
+
+Tuning the model consisted of finding the best regularization hyperparameter value, using the validation partition of the dataset. The model was then trained with this regularization value.
+
+### 3.15 Using the model
+
+After finding the best model and its parameters, it was trained with training and validation partitions and the final RMSE was calculated on the test partition.
+
+Finally, the final model was used to predict the price of new cars.
+
